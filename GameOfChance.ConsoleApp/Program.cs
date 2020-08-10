@@ -19,9 +19,6 @@ namespace GameOfChance.ConsoleApp
             // Register the amount of players, and their names
             RegisterPlayers();
 
-            // Show the start menu
-            ShowStartMenu();
-
             // Loop
             while(true)
             {
@@ -39,15 +36,17 @@ namespace GameOfChance.ConsoleApp
 
         #region Run The Game
         /// <summary>
-        /// The game itself
+        /// Runs the actual game itself
         /// </summary>
         public static void RunTheGame()
         {
+            // Int for storing the total amount of points from throws
             int total = 0;
 
             // Loop
             while(true)
             {
+                // Clear the console
                 Console.Clear();
 
                 // Roll the dice?
@@ -113,10 +112,6 @@ namespace GameOfChance.ConsoleApp
                         // Pause console
                         Console.ReadKey();
                     }
-                    else
-                    {
-                        return;
-                    }
                 }
                 else
                 {
@@ -140,20 +135,6 @@ namespace GameOfChance.ConsoleApp
                     break;
                 }
             }
-        }
-        #endregion
-
-        #region Show Start Menu
-        /// <summary>
-        /// Displays a starting message
-        /// </summary>
-        public static void ShowStartMenu()
-        {
-            Console.Clear();
-
-            Console.WriteLine("Tryk på en tast for at starte spillet...");
-
-            Console.ReadKey();
         }
         #endregion
 
@@ -187,6 +168,7 @@ namespace GameOfChance.ConsoleApp
         /// <param name="winner"></param>
         public static void ShowWinner(Player winner)
         {
+            // Clear the console
             Console.Clear();
 
             // Show message
@@ -221,8 +203,10 @@ namespace GameOfChance.ConsoleApp
         /// </summary>
         public static void RegisterPlayers()
         {
+            // Loop
             while(true)
             {
+                // Clear the console
                 Console.Clear();
 
                 // Initialize players
@@ -243,6 +227,7 @@ namespace GameOfChance.ConsoleApp
                     // Create player objects
                     for(int i = 0; i < playerAmount; i++)
                     {
+                        // Clear the console
                         Console.Clear();
 
                         // Create player object
@@ -262,6 +247,7 @@ namespace GameOfChance.ConsoleApp
                 }
                 else
                 {
+                    // Clear the console
                     Console.Clear();
 
                     // Write error message
