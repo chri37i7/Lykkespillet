@@ -169,16 +169,22 @@ namespace GameOfChance.ConsoleApp
         }
         #endregion
 
+        #region Show Current Scores
         public static void ShowTurn(Player player)
         {
+            // Clear the console
             Console.Clear();
 
+            // Write message
             Console.WriteLine($"Det er nu {player.Name}'s tur!\n");
 
+            // Show the current scores
             ShowCurrentScores();
 
+            // Pause the console
             Console.ReadKey();
         }
+        #endregion
 
         #region Show Winner
         /// <summary>
