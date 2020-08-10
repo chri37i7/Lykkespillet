@@ -43,6 +43,12 @@ namespace GameOfChance.ConsoleApp
             // Int for storing the total amount of points from throws
             int total = 0;
 
+            // Show who's turn it is
+            ShowTurn(players[turnIndex]);
+
+            // Clear the console
+            Console.Clear();
+
             // Loop
             while(true)
             {
@@ -55,12 +61,9 @@ namespace GameOfChance.ConsoleApp
                 // Selection!
                 if(dice != 1)
                 {
-                    // Show current scores
-                    ShowCurrentScores();
-
                     // Write message
                     Console.Write(
-                        $"\n{players[turnIndex].Name} slog {dice}, hvad vil han nu?\n\n" +
+                        $"{players[turnIndex].Name} slog {dice}, hvad vil han nu?\n\n" +
                         $"1) Slå igen\n" +
                         $"2) Gem slag\n\n" +
                         $"Indtast valg: ");
@@ -74,6 +77,7 @@ namespace GameOfChance.ConsoleApp
                     // Do stuff depending on the choice
                     if(choice == "1")
                     {
+                        // Clear the console
                         Console.Clear();
 
                         // Restart the loop
@@ -81,6 +85,7 @@ namespace GameOfChance.ConsoleApp
                     }
                     else if(choice == "2")
                     {
+                        // Clear the console
                         Console.Clear();
 
                         // Save the total
@@ -111,6 +116,9 @@ namespace GameOfChance.ConsoleApp
 
                         // Pause console
                         Console.ReadKey();
+
+                        // Restart
+                        break;
                     }
                 }
                 else
@@ -160,6 +168,17 @@ namespace GameOfChance.ConsoleApp
             Console.WriteLine(scores);
         }
         #endregion
+
+        public static void ShowTurn(Player player)
+        {
+            Console.Clear();
+
+            Console.WriteLine($"Det er nu {player.Name}'s tur!\n");
+
+            ShowCurrentScores();
+
+            Console.ReadKey();
+        }
 
         #region Show Winner
         /// <summary>
@@ -258,7 +277,7 @@ namespace GameOfChance.ConsoleApp
 
                     // Restart the loop
                     continue;
-                } 
+                }
             }
         }
         #endregion
