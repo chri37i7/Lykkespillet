@@ -74,6 +74,8 @@ namespace GameOfChance.ConsoleApp
         /// </summary>
         public static void RunTheGame()
         {
+            int total = 0;
+
             // Loop
             while(true)
             {
@@ -84,13 +86,16 @@ namespace GameOfChance.ConsoleApp
 
                 // Selection!
                 if(dice != 1)
-                {                  
+                {
                     // Write message
                     Console.Write(
                         $"{players[turnIndex].Name} slog {dice}, hvad vil han nu?\n\n" +
                         $"1) Slå igen\n" +
                         $"2) Gem slag\n\n" +
                         $"Indtast valg: ");
+
+                    // Save total
+                    total += dice;
 
                     // Get the users choice
                     string choice = Console.ReadLine();
@@ -108,7 +113,10 @@ namespace GameOfChance.ConsoleApp
                         Console.Clear();
 
                         // Save the total
-                        players[turnIndex].Points += dice;
+                        players[turnIndex].Points += total;
+
+                        // Reset total
+                        total = 0;
 
                         // Check if the game has been won
                         if(players[turnIndex].Points >= 100)
@@ -132,6 +140,10 @@ namespace GameOfChance.ConsoleApp
 
                         // Pause console
                         Console.ReadKey();
+                    }
+                    else
+                    {
+                        return;
                     }
                 }
                 else
