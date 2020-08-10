@@ -8,12 +8,10 @@ namespace GameOfChance.ConsoleApp
     public class Program
     {
         #region Static Fields
-
         // Static field for storing players
         private static List<Player> players;
         // Who's turn is it?
         private static int turnIndex;
-
         #endregion
 
         public static void Main()
@@ -33,60 +31,11 @@ namespace GameOfChance.ConsoleApp
                 // Check if the current player has won
                 if(players[turnIndex].Points >= 100)
                 {
+                    // Break the current loop if the game has been won
                     break;
                 }
             }
         }
-
-        #region Show Start Menu
-        /// <summary>
-        /// Displays a starting message
-        /// </summary>
-        public static void ShowStartMenu()
-        {
-            Console.Clear();
-
-            Console.WriteLine("Tryk på en tast for at starte spillet...");
-
-            Console.ReadKey();
-        }
-        #endregion
-
-        #region Show Winner
-        /// <summary>
-        /// Displays who won the game
-        /// </summary>
-        /// <param name="winner"></param>
-        public static void ShowWinner(Player winner)
-        {
-            Console.Clear();
-
-            // Show message
-            Console.WriteLine($"Tillykke! {winner.Name} vandt spillet med {winner.Points} points!!!");
-
-            Console.ReadKey();
-        }
-        #endregion
-
-        #region Show Current Scores
-        public static void ShowCurrentScores()
-        {
-            // Sort players by points decending
-            List<Player> currentPlayers = players.OrderByDescending(player => player.Points).ToList();
-
-            // String that will contain players and their scores
-            string scores = "Indhold i skattekister: ";
-
-            // Concatenate players and their points
-            foreach(Player player in currentPlayers)
-            {
-                scores += $"{player.Name}: {player.Points}, ";
-            }
-
-            // Output the scores
-            Console.WriteLine(scores);
-        }
-        #endregion
 
         #region Run The Game
         /// <summary>
@@ -194,6 +143,60 @@ namespace GameOfChance.ConsoleApp
         }
         #endregion
 
+        #region Show Start Menu
+        /// <summary>
+        /// Displays a starting message
+        /// </summary>
+        public static void ShowStartMenu()
+        {
+            Console.Clear();
+
+            Console.WriteLine("Tryk på en tast for at starte spillet...");
+
+            Console.ReadKey();
+        }
+        #endregion
+
+        #region Show Current Scores
+        /// <summary>
+        /// Shows the current scores in decending order
+        /// </summary>
+        public static void ShowCurrentScores()
+        {
+            // Sort players by points decending
+            List<Player> currentPlayers = players.OrderByDescending(player => player.Points).ToList();
+
+            // String that will contain players and their scores
+            string scores = "Indhold i skattekister: ";
+
+            // Concatenate players and their points
+            foreach(Player player in currentPlayers)
+            {
+                scores += $"{player.Name}: {player.Points}, ";
+            }
+
+            // Output the scores
+            Console.WriteLine(scores);
+        }
+        #endregion
+
+        #region Show Winner
+        /// <summary>
+        /// Displays who won the game
+        /// </summary>
+        /// <param name="winner"></param>
+        public static void ShowWinner(Player winner)
+        {
+            Console.Clear();
+
+            // Show message
+            Console.WriteLine($"Tillykke! {winner.Name} vandt spillet med {winner.Points} points!!!");
+
+            // Pause the console
+            Console.ReadKey();
+        }
+        #endregion
+
         #region Roll the Dice
         /// <summary>
         /// Used for generating a number on the dice
@@ -201,10 +204,13 @@ namespace GameOfChance.ConsoleApp
         /// <returns>Returns a number from 1 - 6</returns>
         public static int RollTheDice()
         {
+            // Create random object
             Random random = new Random();
 
+            // Generate a random number
             int dice = random.Next(1, 6);
 
+            // Return the number
             return dice;
         }
         #endregion
@@ -215,58 +221,59 @@ namespace GameOfChance.ConsoleApp
         /// </summary>
         public static void RegisterPlayers()
         {
-            // Initialize players
-            players = new List<Player>();
-
-            // Write message
-            Console.Write(
-                "Hvor mange spillere er i?" +
-                "\n\n" +
-                "Indtast antal: ");
-
-            // Read and parse input
-            string input = Console.ReadLine();
-            int.TryParse(input, out int playerAmount);
-
-            // Create player objects
-            for(int i = 0; i < playerAmount; i++)
+            while(true)
             {
                 Console.Clear();
 
-                Player player = new Player();
+                // Initialize players
+                players = new List<Player>();
 
-                Console.Write("Indtast navn: ");
+                // Write message
+                Console.Write(
+                    "Hvor mange spillere er i?" +
+                    "\n\n" +
+                    "Indtast antal: ");
 
-                string name = Console.ReadLine();
+                // Read and parse input
+                string input = Console.ReadLine();
+                int.TryParse(input, out int playerAmount);
 
-                player.Name = name;
+                if(playerAmount > 0)
+                {
+                    // Create player objects
+                    for(int i = 0; i < playerAmount; i++)
+                    {
+                        Console.Clear();
 
-                players.Add(player);
+                        // Create player object
+                        Player player = new Player();
+
+                        // Write message
+                        Console.Write("Indtast navn: ");
+
+                        // Assign value
+                        player.Name = Console.ReadLine();
+                        // Add the object to the list
+                        players.Add(player);
+                    }
+
+                    // Stop the loop
+                    break;
+                }
+                else
+                {
+                    Console.Clear();
+
+                    // Write error message
+                    Console.WriteLine("Fejl! Der skal mindst være én spiller.");
+
+                    // Pause console
+                    Console.ReadKey();
+
+                    // Restart the loop
+                    continue;
+                } 
             }
-        }
-        #endregion
-
-        #region Create Players
-        /// <summary>
-        /// Creates a specific amount of <see cref="Player"/> objects
-        /// </summary>
-        /// <param name="amount"></param>
-        /// <returns>A list og <see cref="Player"/> objects</returns>
-        public static List<Player> CreatePlayers(int amount)
-        {
-            // Create list to store players
-            List<Player> players = new List<Player>();
-
-            // Create players, and add them to the list
-            for(int i = 0; i < amount; i++)
-            {
-                Player player = new Player();
-
-                players.Add(player);
-            }
-
-            // Return the list
-            return players;
         }
         #endregion
     }
