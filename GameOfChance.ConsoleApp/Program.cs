@@ -18,19 +18,19 @@ namespace GameOfChance.ConsoleApp
 
         public static void Main()
         {
-            //players = CreatePlayers(2);
-
-            //players[0].Name = "Christian";
-            //players[1].Name = "Jens";
-
+            // Register the amount of players, and their names
             RegisterPlayers();
 
+            // Show the start menu
             ShowStartMenu();
 
+            // Loop
             while(true)
             {
+                // Run the actual game
                 RunTheGame();
 
+                // Check if the current player has won
                 if(players[turnIndex].Points >= 100)
                 {
                     break;
@@ -68,6 +68,26 @@ namespace GameOfChance.ConsoleApp
         }
         #endregion
 
+        #region Show Current Scores
+        public static void ShowCurrentScores()
+        {
+            // Sort players by points decending
+            List<Player> currentPlayers = players.OrderByDescending(player => player.Points).ToList();
+
+            // String that will contain players and their scores
+            string scores = "Indhold i skattekister: ";
+
+            // Concatenate players and their points
+            foreach(Player player in currentPlayers)
+            {
+                scores += $"{player.Name}: {player.Points}, ";
+            }
+
+            // Output the scores
+            Console.WriteLine(scores);
+        }
+        #endregion
+
         #region Run The Game
         /// <summary>
         /// The game itself
@@ -87,9 +107,12 @@ namespace GameOfChance.ConsoleApp
                 // Selection!
                 if(dice != 1)
                 {
+                    // Show current scores
+                    ShowCurrentScores();
+
                     // Write message
                     Console.Write(
-                        $"{players[turnIndex].Name} slog {dice}, hvad vil han nu?\n\n" +
+                        $"\n{players[turnIndex].Name} slog {dice}, hvad vil han nu?\n\n" +
                         $"1) Slå igen\n" +
                         $"2) Gem slag\n\n" +
                         $"Indtast valg: ");
