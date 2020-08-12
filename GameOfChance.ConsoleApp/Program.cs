@@ -105,14 +105,7 @@ namespace GameOfChance.ConsoleApp
                         Console.WriteLine($"{players[turnIndex].Name} har nu {players[turnIndex].Points} points");
 
                         // Change turns
-                        if(turnIndex == players.Count - 1)
-                        {
-                            turnIndex = 0;
-                        }
-                        else
-                        {
-                            turnIndex++;
-                        }
+                        ChangeTurn();
 
                         // Pause console
                         Console.ReadKey();
@@ -127,14 +120,7 @@ namespace GameOfChance.ConsoleApp
                     Console.WriteLine($"Desværre. {players[turnIndex].Name} slog {dice} og tabte sine slag");
 
                     // Change turns
-                    if(turnIndex == players.Count - 1)
-                    {
-                        turnIndex = 0;
-                    }
-                    else
-                    {
-                        turnIndex++;
-                    }
+                    ChangeTurn();
 
                     // Pause consone
                     Console.ReadKey();
@@ -169,7 +155,11 @@ namespace GameOfChance.ConsoleApp
         }
         #endregion
 
-        #region Show Current Scores
+        #region Show Turn
+        /// <summary>
+        /// Shows which players turn it is
+        /// </summary>
+        /// <param name="player"></param>
         public static void ShowTurn(Player player)
         {
             // Clear the console
@@ -201,6 +191,23 @@ namespace GameOfChance.ConsoleApp
 
             // Pause the console
             Console.ReadKey();
+        }
+        #endregion
+
+        #region Change turn
+        /// <summary>
+        /// Change turn to the next player
+        /// </summary>
+        public static void ChangeTurn()
+        {
+            if(turnIndex == players.Count - 1)
+            {
+                turnIndex = 0;
+            }
+            else
+            {
+                turnIndex++;
+            }
         }
         #endregion
 
