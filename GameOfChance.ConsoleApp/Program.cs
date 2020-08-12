@@ -12,6 +12,8 @@ namespace GameOfChance.ConsoleApp
         private static List<Player> players;
         // Who's turn is it?
         private static int turnIndex;
+        // Has the game been won
+        private static bool isDone;
         #endregion
 
         public static void Main()
@@ -20,17 +22,10 @@ namespace GameOfChance.ConsoleApp
             RegisterPlayers();
 
             // Loop
-            while(true)
+            while(!isDone)
             {
                 // Run the actual game
                 RunTheGame();
-
-                // Check if the current player has won
-                if(players[turnIndex].Points >= 100)
-                {
-                    // Break the current loop if the game has been won
-                    break;
-                }
             }
         }
 
@@ -50,7 +45,7 @@ namespace GameOfChance.ConsoleApp
             Console.Clear();
 
             // Loop
-            while(true)
+            while(!isDone)
             {
                 // Clear the console
                 Console.Clear();
@@ -95,23 +90,17 @@ namespace GameOfChance.ConsoleApp
                         total = 0;
 
                         // Check if the game has been won
-                        if(players[turnIndex].Points >= 100)
+                        if(!HasBeenWon())
                         {
-                            ShowWinner(players[turnIndex]);
+                            // Output the player and points
+                            Console.WriteLine($"{players[turnIndex].Name} har nu {players[turnIndex].Points} points");
 
-                            break;
+                            // Change turns
+                            ChangeTurn();
+
+                            // Pause console
+                            Console.ReadKey();
                         }
-                        // Output the player and points
-                        Console.WriteLine($"{players[turnIndex].Name} har nu {players[turnIndex].Points} points");
-
-                        // Change turns
-                        ChangeTurn();
-
-                        // Pause console
-                        Console.ReadKey();
-
-                        // Restart
-                        break;
                     }
                 }
                 else
@@ -124,9 +113,6 @@ namespace GameOfChance.ConsoleApp
 
                     // Pause consone
                     Console.ReadKey();
-
-                    // Break loop to restart
-                    break;
                 }
             }
         }
@@ -293,6 +279,29 @@ namespace GameOfChance.ConsoleApp
                 }
             }
         }
+        #endregion
+
+        #region Has Been Won
+        public static bool HasBeenWon()
+        {
+            // Check if current player has 100 points
+            if(players[turnIndex].Points >= 100)
+            {
+                // Break loops
+                isDone = true;
+
+                // Show winner
+                ShowWinner(players[turnIndex]);
+
+                // Return true because the game has been won
+                return true;
+            }
+            else
+            {
+                // Return false because the game has not been won
+                return false;
+            }
+        } 
         #endregion
     }
 }
