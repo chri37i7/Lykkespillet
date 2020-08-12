@@ -74,9 +74,6 @@ namespace GameOfChance.ConsoleApp
                     {
                         // Clear the console
                         Console.Clear();
-
-                        // Restart the loop
-                        continue;
                     }
                     else if(choice == "2")
                     {
